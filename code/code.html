@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset = "UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code</title>
+    <script src="../codemirror/lib/codemirror.js"></script>
+    <script src="../codemirror/addon/edit/closebrackets.js"></script>
+    <script src="../codemirror/addon/edit/matchbrackets.js"></script>
+    <link rel="stylesheet" href="../codemirror/lib/codemirror.css">
+    <script src="../codemirror/mode/clike/clike.js"></script>
+    <style>.CodeMirror {border: 2px solid black}</style>
+</head>
+<body>
+    <h1>Shhhh...........</h1>
+    <div>
+        
+        <table  width="100%">
+            <th><h3>Team's Code</h3></th>
+            <tr>
+                <td rowspan = "4" width="70%"><textarea id="team_code"></textarea></td>
+                <td><b>Input</b></td>
+            </tr>
+            <tr>
+                <td><textarea id="team_input" rows="7" cols="30"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>Output</b></td>
+            </tr>
+            <tr>
+                <td><textarea id="team_output" rows="7" cols="30"></textarea></td>
+            </tr>
+        </table>
+        <button id="team_run_code">Run Code</button>
+
+        <br><br><br>
+
+        <table  width="100%">
+            <th><h3>Personal Code</h3></th>
+            <tr>
+                <td rowspan = "4" width="70%"><textarea id="personal_code"></textarea></td>
+                <td><b>Input</b></td>
+            </tr>
+            <tr>
+                <td><textarea id="personal_input" rows="7" cols="30"></textarea></td>
+            </tr>
+            <tr>
+                <td><b>Output</b></td>
+            </tr>
+            <tr>
+                <td><textarea id="personal_output" rows="7" cols="30"></textarea></td>
+            </tr>
+        </table>
+        <button id="personal_run_code">Run Code</button>
+
+        <br><br><br><br><br><br>
+
+    </div>
+    <script src="code.js"></script>
+</body>
+</html>
