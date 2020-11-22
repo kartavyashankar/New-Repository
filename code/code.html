@@ -28,10 +28,10 @@
                 <td><b>Output</b></td>
             </tr>
             <tr>
-                <td><textarea id="team_output" rows="7" cols="30"></textarea></td>
+                <td><textarea id="team_output" rows="7" cols="30" disabled></textarea></td>
             </tr>
         </table>
-        <button id="team_run_code">Run Code</button>
+        <button id="team_run_code" onclick="run_compile(editor1, 'team_input', 'team_output')">Run Code</button>
 
         <br><br><br>
 
@@ -48,10 +48,10 @@
                 <td><b>Output</b></td>
             </tr>
             <tr>
-                <td><textarea id="personal_output" rows="7" cols="30"></textarea></td>
+                <td><textarea id="personal_output" rows="7" cols="30" disabled></textarea></td>
             </tr>
         </table>
-        <button id="personal_run_code">Run Code</button>
+        <button id="personal_run_code" onclick="run_compile(editor2, 'personal_input', 'personal_output')">Run Code</button>
 
         <br><br><br><br><br><br>
 
