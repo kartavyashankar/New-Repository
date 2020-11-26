@@ -9,46 +9,92 @@
     <script src="../codemirror/addon/edit/matchbrackets.js"></script>
     <link rel="stylesheet" href="../codemirror/lib/codemirror.css">
     <script src="../codemirror/mode/clike/clike.js"></script>
+    <script src="../codemirror/mode/python/python.js"></script>
     <style>.CodeMirror {border: 2px solid black}</style>
+
+    <!-- Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Shhhh...........</h1>
+    <h3>Team's Code</h3>
     <div>
-        
         <table  width="100%">
-            <th><h3>Team's Code</h3></th>
+            <th>
+                <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="c_1" onclick="addDefault(editor1, 0); changeClass1(team_c);">C</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="c++_1" onclick="addDefault(editor1, 1); changeClass1(team_cpp);">C++</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="java_1" onclick="addDefault(editor1, 2); changeClass1(team_java);">Java</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="python_1" onclick="addDefault(editor1, 3); changeClass1(team_python);">Python</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="python3_1" onclick="addDefault(editor1, 4); changeClass1(team_python3);">Python 3</a>
+                        </li>
+                    </ul>
+                </nav>
+            </th>
             <tr>
-                <td rowspan = "4" width="70%"><textarea id="team_code"></textarea></td>
+                <td rowspan = "4" width="75%"><textarea id="team_code"></textarea></td>
                 <td><b>Input</b></td>
             </tr>
             <tr>
-                <td><textarea id="team_input" rows="7" cols="30"></textarea></td>
+                <td><textarea id="team_input" rows="6" cols="45"></textarea></td>
             </tr>
             <tr>
                 <td><b>Output</b></td>
             </tr>
             <tr>
-                <td><textarea id="team_output" rows="7" cols="30" disabled></textarea></td>
+                <td><textarea id="team_output" rows="5" cols="45" disabled></textarea></td>
             </tr>
         </table>
         <button id="team_run_code" onclick="run_compile(editor1, 'team_input', 'team_output')">Run Code</button>
 
         <br><br><br>
 
+        <h3>Personal Code</h3>
         <table  width="100%">
-            <th><h3>Personal Code</h3></th>
+            <th>
+                <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="c_2" onclick="addDefault(editor2, 0); changeClass2(personal_c);">C</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="c++_2" onclick="addDefault(editor2, 1); changeClass2(personal_cpp);">C++</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="java_2" onclick="addDefault(editor2, 2); changeClass2(personal_java);">Java</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="python_2" onclick="addDefault(editor2, 3); changeClass2(personal_python);">Python</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="python3_2" onclick="addDefault(editor2, 4); changeClass2(personal_python3);">Python 3</a>
+                        </li>
+                    </ul>
+                </nav>
+            </th>
             <tr>
-                <td rowspan = "4" width="70%"><textarea id="personal_code"></textarea></td>
+                <td rowspan = "4" width="75%"><textarea id="personal_code"></textarea></td>
                 <td><b>Input</b></td>
             </tr>
             <tr>
-                <td><textarea id="personal_input" rows="7" cols="30"></textarea></td>
+                <td><textarea id="personal_input" rows="6" cols="45"></textarea></td>
             </tr>
             <tr>
                 <td><b>Output</b></td>
             </tr>
             <tr>
-                <td><textarea id="personal_output" rows="7" cols="30" disabled></textarea></td>
+                <td><textarea id="personal_output" rows="5" cols="45" disabled></textarea></td>
             </tr>
         </table>
         <button id="personal_run_code" onclick="run_compile(editor2, 'personal_input', 'personal_output')">Run Code</button>
@@ -57,5 +103,6 @@
 
     </div>
     <script src="code.js"></script>
+    <link rel="stylesheet" href="code.css">
 </body>
 </html>
