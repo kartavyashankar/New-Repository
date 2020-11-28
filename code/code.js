@@ -103,7 +103,7 @@ function get_output(submissionId, output){
                 var status = result.status;
                 var output_data = "No Output";
                 var publish = document.getElementById(output);
-                publish.value = 'Status Code: ' + status.name.toUpperCase() + '\n\nOutput:\n';
+                publish.value = 'Status Code: ' + status.name.toUpperCase() + '\nOutput:\n';
                 if (result.streams.output) {
                     var output_link = result.streams.output.uri;
                     const url = proxyUrl + output_link;
