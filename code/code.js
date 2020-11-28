@@ -74,25 +74,16 @@ function initialize_compiler(){
     compilers.push(116);
 }
 
-//Method used to set compilerId, compilerMode and default language code
-function addDefault(editor, type){
-    editor.setOption('mode', modes[type]);
-    editor.setValue(templates[type]);
-    compiler = compilers[type];
+function addDefault(editor){
+    editor.setValue(templates[current]);
 }
 
-function txtparser(output_link, output_data){
-    const url = proxyUrl + output_link;
-    fetch(url, {
-        method: 'GET'
-    })
-    .then(function(response){  return response.text()  })
-    .then(
-        function(data){
-            console.log(data);
-        }
-    )
-    .catch(() => console.log("Some ERROR! Happened"));
+//Method used to set compilerId, compilerMode and default language code
+function addCompilerOptions(editor, type){
+    editor.setOption('mode', modes[type]);
+    editor.setValue(CODES[type]);
+    compiler = compilers[type];
+    current = type;
 }
 
 function get_output(submissionId, output){
@@ -161,6 +152,11 @@ function run_compile(editor, input, output){
     .catch(() => console.log("Some ERROR! Happened"));
 }
 
+function saveToStorage(editor){
+    CODES[current] = editor.getValue();
+    localStorage.setItem("IDE", JSON.stringify(CODES));
+}
+
 //Team's Code nav variables
 var team_c = document.getElementById("c_1");
 var team_cpp = document.getElementById("c++_1");
@@ -186,6 +182,24 @@ initialize_mode();
 var compilers=[];
 initialize_compiler();
 
+let CODES = ['','','','',''];
+
+//Getting default codes from Local Storage
+let data = localStorage.getItem("IDE");
+
+if(data){
+    CODES = JSON.parse(data);
+}
+else{
+    CODES[0] = templates[0];
+    CODES[1] = templates[1];
+    CODES[2] = templates[2];
+    CODES[3] = templates[3];
+    CODES[4] = templates[4];
+}
+
+var current = 0;//To choose which compiler_option is currently running
+
 var code1 = document.getElementById("team_code");
 var code2 = document.getElementById("personal_code");
 
@@ -202,8 +216,8 @@ var editor2 = CodeMirror.fromTextArea(code2 , {
     tabSize: 2
 });
 
-addDefault(editor1, 0);
-addDefault(editor2, 0);
+addCompilerOptions(editor1, 0);
+addCompilerOptions(editor2, 0);
 
 //                                  Running the code
 

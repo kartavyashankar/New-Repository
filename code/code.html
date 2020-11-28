@@ -25,19 +25,19 @@
                 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" id="c_1" onclick="addDefault(editor1, 0); changeClass1(team_c);">C</a>
+                            <a class="nav-link active" id="c_1" onclick="addCompilerOptions(editor1, 0); changeClass1(team_c);">C</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="c++_1" onclick="addDefault(editor1, 1); changeClass1(team_cpp);">C++</a>
+                            <a class="nav-link" id="c++_1" onclick="addCompilerOptions(editor1, 1); changeClass1(team_cpp);">C++</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="java_1" onclick="addDefault(editor1, 2); changeClass1(team_java);">Java</a>
+                            <a class="nav-link" id="java_1" onclick="addCompilerOptions(editor1, 2); changeClass1(team_java);">Java</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="python_1" onclick="addDefault(editor1, 3); changeClass1(team_python);">Python</a>
+                            <a class="nav-link" id="python_1" onclick="addCompilerOptions(editor1, 3); changeClass1(team_python);">Python</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="python3_1" onclick="addDefault(editor1, 4); changeClass1(team_python3);">Python 3</a>
+                            <a class="nav-link" id="python3_1" onclick="addCompilerOptions(editor1, 4); changeClass1(team_python3);">Python 3</a>
                         </li>
                     </ul>
                 </nav>
@@ -57,6 +57,8 @@
             </tr>
         </table>
         <button id="team_run_code" onclick="run_compile(editor1, 'team_input', 'team_output')">Run Code</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button onclick="addDefault(editor2)">Default</button>
 
         <br><br><br>
 
@@ -66,19 +68,19 @@
                 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" id="c_2" onclick="addDefault(editor2, 0); changeClass2(personal_c);">C</a>
+                            <a class="nav-link active" id="c_2" onclick="addCompilerOptions(editor2, 0); changeClass2(personal_c);">C</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="c++_2" onclick="addDefault(editor2, 1); changeClass2(personal_cpp);">C++</a>
+                            <a class="nav-link" id="c++_2" onclick="addCompilerOptions(editor2, 1); changeClass2(personal_cpp);">C++</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="java_2" onclick="addDefault(editor2, 2); changeClass2(personal_java);">Java</a>
+                            <a class="nav-link" id="java_2" onclick="addCompilerOptions(editor2, 2); changeClass2(personal_java);">Java</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="python_2" onclick="addDefault(editor2, 3); changeClass2(personal_python);">Python</a>
+                            <a class="nav-link" id="python_2" onclick="addCompilerOptions(editor2, 3); changeClass2(personal_python);">Python</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="python3_2" onclick="addDefault(editor2, 4); changeClass2(personal_python3);">Python 3</a>
+                            <a class="nav-link" id="python3_2" onclick="addCompilerOptions(editor2, 4); changeClass2(personal_python3);">Python 3</a>
                         </li>
                     </ul>
                 </nav>
@@ -97,8 +99,9 @@
                 <td><textarea id="personal_output" rows="5" cols="45" disabled></textarea></td>
             </tr>
         </table>
-        <button id="personal_run_code" onclick="run_compile(editor2, 'personal_input', 'personal_output')">Run Code</button>
-
+        <button id="personal_run_code" onclick="run_compile(editor2, 'personal_input', 'personal_output'); saveToStorage(editor2);">Run Code</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button onclick="addDefault(editor2)">Default</button>
         <br><br><br><br><br><br>
 
     </div>
