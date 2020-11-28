@@ -81,6 +81,20 @@ function addDefault(editor, type){
     compiler = compilers[type];
 }
 
+function txtparser(output_link, output_data){
+    const url = proxyUrl + output_link;
+    fetch(url, {
+        method: 'GET'
+    })
+    .then(function(response){  return response.text()  })
+    .then(
+        function(data){
+            console.log(data);
+        }
+    )
+    .catch(() => console.log("Some ERROR! Happened"));
+}
+
 function get_output(submissionId, output){
     const url = proxyUrl + 'https://' + endpoint + '/api/v4/submissions/' + submissionId + '?access_token=' + accessToken;
     fetch(url, {
@@ -97,11 +111,27 @@ function get_output(submissionId, output){
                 var result = data.result;
                 var status = result.status;
                 var output_data = "No Output";
-                if (result.streams.output) {
-                    output_data = result.streams.output.uri;
-                }
                 var publish = document.getElementById(output);
-                publish.value = 'Status Code: ' + status.name.toUpperCase() + '\n\nOutput Link: ' + output_data;
+                publish.value = 'Status Code: ' + status.name.toUpperCase() + '\n\nOutput:\n';
+                if (result.streams.output) {
+                    var output_link = result.streams.output.uri;
+                    const url = proxyUrl + output_link;
+                    fetch(url, {
+                        method: 'GET'
+                    })
+                    .then(function(response){  return response.text()  })
+                    .then(
+                        function(data){
+                            output_data = data;
+                            publish.value = publish.value + output_data;
+                        }
+                    )
+                    .catch(() => console.log("Some ERROR! Happened"));
+                    
+                }
+                else{
+                    publish.value = publish.value + output_data;
+                }
             }
         }
     )
