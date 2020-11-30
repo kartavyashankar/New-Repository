@@ -14,7 +14,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 // Set static folder
-app.use(express.static('public'));
+app.use(express.static('public_access'));
 
 // Run when a client connects
 io.on('connection', socket => {
