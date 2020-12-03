@@ -4,6 +4,7 @@
     <meta charset = "UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code</title>
+    <link rel="icon" href="../images/logo.png">
     <script src="../codemirror/lib/codemirror.js"></script>
     <script src="../codemirror/addon/edit/closebrackets.js"></script>
     <script src="../codemirror/addon/edit/matchbrackets.js"></script>
@@ -27,7 +28,7 @@
 	<p class="notificationBot   ">Notification Bot: <span id="not"></span></p>
     <h3>Team's Code</h3>
     <div>
-        <table  width="100%">
+        <table  width="100%" cellpadding="5">
             <th>
                 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
                     <ul class="navbar-nav">
@@ -54,13 +55,13 @@
                 <td><b>Input</b></td>
             </tr>
             <tr>
-                <td><textarea id="team_input" rows="6" cols="45"></textarea></td>
+                <td><textarea id="team_input" rows="6" cols="30"></textarea></td>
             </tr>
             <tr>
                 <td><b>Output</b></td>
             </tr>
             <tr>
-                <td><textarea id="team_output" rows="5" cols="45" disabled></textarea></td>
+                <td><textarea id="team_output" rows="5" cols="30" disabled></textarea></td>
             </tr>
         </table>
         <button id="team_run_code" onclick="run_compile(editor1, 'team_input', 'team_output', team_compiler); saveToStorage1(editor1, team_current);">Run Code</button>
@@ -72,7 +73,7 @@
         <br><br><br>
 
         <h3>Personal Code</h3>
-        <table  width="100%">
+        <table  width="100%" cellpadding="5">
             <th>
                 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
                     <ul class="navbar-nav">
@@ -99,13 +100,13 @@
                 <td><b>Input</b></td>
             </tr>
             <tr>
-                <td><textarea id="personal_input" rows="6" cols="45"></textarea></td>
+                <td><textarea id="personal_input" rows="6" cols="30"></textarea></td>
             </tr>
             <tr>
                 <td><b>Output</b></td>
             </tr>
             <tr>
-                <td><textarea id="personal_output" rows="5" cols="45" disabled></textarea></td>
+                <td><textarea id="personal_output" rows="5" cols="30" disabled></textarea></td>
             </tr>
         </table>
         <button id="personal_run_code" onclick="run_compile(editor2, 'personal_input', 'personal_output', personal_compiler); saveToStorage2(editor2, personal_current);">Run Code</button>

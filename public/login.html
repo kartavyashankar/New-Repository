@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
+    <link rel="icon" href="images/logo.png">
     <link rel="stylesheet" href="stylesheets/login.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
@@ -14,21 +15,22 @@
                 hello?
             </div>
             <hr>
-            <form method="GET" action="./code/code.html">
+            <form id="post" method="GET" action="login.html">
                 <div class="data">
                     <label>Username</label>
-                    <input type="text" name="username" required>
+                    <input id="username" type="text" name="username" required>
                 </div>
                 <div class="data">
                     <label>Team ID</label>
-                    <input name="room" type="password" required>
+                    <input id="room" type="password" name="room" placeholder="6-8 characters" required>
                 </div>
                 <div class="btn">
                     <div class="inner">
                     </div>
-                    <button type="submit" class="submit">login</button>
+                    <button type="submit" class="submit" onclick="check()">login</button>
                 </form>
         </div>
     </div>
+    <script src="login.js"></script>
 </body>
 </html>
