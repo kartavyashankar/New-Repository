@@ -1,0 +1,17 @@
+{
+  "name": "rte",
+  "version": "1.0.0",
+  "description": "MegaProject",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Kartavya Shaswat Anshul",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "require": "^2.4.20",
+    "socket.io": "^3.0.3"
+  }
+}

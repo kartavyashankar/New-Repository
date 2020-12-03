@@ -1,0 +1,41 @@
+body{
+    background-image: url(../images/bg.png);
+    font-family: 'Poppins', sans-serif;
+}
+
+textarea {
+    font-size: 15px;
+}
+
+.nav-link {
+    cursor: pointer;
+}
+
+.notificationBot{
+    background: #C13336;
+}
+
+textarea{
+    background: #F7F3F6;
+}
+
+b{
+    font-size: 15px;
+}
+
+.CodeMirror-scroll{
+    background: #F7F3F6;
+    font-family: 'Inconsolata', monospace;
+}
+
+
+button{
+    background: linear-gradient(180deg, #247BA0 0%, rgba(36, 123, 160, 0.911458) 8.85%, rgba(36, 123, 160, 0.24) 100%);
+    border: none;
+    color: #201D1D;
+    /* font-size: 18px; */
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-transform: lowercase;
+}
