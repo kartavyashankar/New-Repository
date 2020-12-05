@@ -1,5 +1,8 @@
 //              SERVER SIDE COMMUNICATION               //
 const socket = io();
+const chatform = document.getElementById('chat-form');
+const cc = document.getElementById('chat-container');
+const ttlbar = document.getElementById('ttlbar');
 const ulist = document.getElementById('ulist');
 const tarea = document.getElementById('tarea');
 const not = document.getElementById('not');
@@ -12,6 +15,20 @@ socket.emit('joinRoom', { username, room });
 // Messsage from Server
 socket.on('message', (message) => {
     not.innerHTML = message;
+});
+
+socket.on('chat', chat => {
+    const div = document.createElement('div');
+    div.classList.add('ot');
+    div.classList.add('mess');
+    div.innerHTML = `<p>${chat.username}</p>
+                        <p>
+                            ${chat.text}
+                        </p>`;
+    if(cc.style.display === "none") {
+        ttlbar.style.background = "red";
+    }
+    document.querySelector('.chat-messages').appendChild(div);
 });
 
 socket.on('roomUsers', ({ room, users }) => {
@@ -34,7 +51,27 @@ function shareCode(){
 }
 
 
-//              CLIENT SIDE                // 
+//              CLIENT SIDE                //
+chatform.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Get message text
+    const msg = e.target.elements.msg.value;
+
+    // Emitting a message to the server
+    socket.emit('chatMessage', msg);
+    const div = document.createElement('div');
+    div.classList.add('you');
+    div.classList.add('mess');
+    div.innerHTML = `<p>You</p>
+                        <p>
+                            ${msg}
+                        </p>`;
+    document.querySelector('.chat-messages').appendChild(div);
+    // Clear input
+    e.target.elements.msg.value = '';
+    e.target.elements.msg.focus();
+});
+
 function sleep(milliseconds) {
     const date = Date.now();
     let currentDate = null;

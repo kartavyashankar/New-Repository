@@ -27,6 +27,12 @@ io.on('connection', socket => {
 			room: user.room,
 			users: getRoomUsers(user.room)
 		});
+		socket.on('chatMessage', msg => {
+			socket.broadcast.to(user.room).emit('chat', {
+				username : user.username,
+				text : msg
+			});
+		});
 		socket.on('send', ({shared_code, team_current}) => {
 			const user = getCurrentUser(socket.id);
         	socket.broadcast.to(user.room).emit('receive', {shared_code, team_current});
