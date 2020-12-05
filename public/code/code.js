@@ -25,10 +25,11 @@ socket.on('chat', chat => {
                         <p>
                             ${chat.text}
                         </p>`;
+    document.querySelector('.chat-messages').appendChild(div);
+    document.querySelector('.chat-messages').scrollTop = document.querySelector('.chat-messages').scrollHeight;
     if(cc.style.display === "none") {
         ttlbar.style.background = "red";
     }
-    document.querySelector('.chat-messages').appendChild(div);
 });
 
 socket.on('roomUsers', ({ room, users }) => {
@@ -67,6 +68,7 @@ chatform.addEventListener('submit', (e) => {
                             ${msg}
                         </p>`;
     document.querySelector('.chat-messages').appendChild(div);
+    document.querySelector('.chat-messages').scrollTop = document.querySelector('.chat-messages').scrollHeight;
     // Clear input
     e.target.elements.msg.value = '';
     e.target.elements.msg.focus();
