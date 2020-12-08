@@ -5,12 +5,7 @@ const {
 	userJoin, 
 	getCurrentUser, 
 	userLeave, 
-	getRoomUsers,
-	roomAdd,
-	getRoomStatus,
-	updateCode,
-	updateCompiler,
-	roomDest
+	getRoomUsers
 	 } = require('./utils/users');
 
 const app = express();
@@ -25,51 +20,30 @@ io.on('connection', socket => {
     // Listen for code Shared
     socket.on('joinRoom', ({ username, room }) => {
     	const user = userJoin(socket.id, username, room);
-    	const roomf = roomAdd(room, 'init0', 0);
-    	// console.log(roomf.cc);
-    	// updateCount(user.room, roomf.count+1);
     	socket.join(user.room);
     	socket.emit('message', 'You have joined the room!');
-    	if(roomf.cc !== 'init0')
-    	{
-    		var shared_code = roomf.cc;
-    		io.to(user.room).emit('receive', shared_code);
-    	}
-    	socket.emit('rlang', roomf.comp);
     	socket.broadcast.to(user.room).emit('message', `${user.username} has joined the room!`);
     	io.to(user.room).emit('roomUsers', {
 			room: user.room,
 			users: getRoomUsers(user.room)
 		});
 		socket.on('chatMessage', msg => {
-			var user = getCurrentUser(socket.id);
 			socket.broadcast.to(user.room).emit('chat', {
 				username : user.username,
 				text : msg
 			});
 		});
-		socket.on('send', (shared_code) => {
-			var user = getCurrentUser(socket.id);
-			updateCode(user.room, shared_code);
-        	socket.broadcast.to(user.room).emit('receive', shared_code);
+		socket.on('send', ({shared_code, team_current}) => {
+			const user = getCurrentUser(socket.id);
+        	socket.broadcast.to(user.room).emit('receive', {shared_code, team_current});
         	socket.broadcast.to(user.room).emit('message', `${user.username} has shared the code!`);
 			socket.emit('message', 'You have shared your code!');
-    	});
-    	socket.on('lang', (team_id) => {
-    		var user = getCurrentUser(socket.id);
-    		updateCompiler(user.room, team_id);
-    		socket.broadcast.to(user.room).emit('rlang', team_id);
     	});
     });
 
     socket.on('disconnect', () => {
 		const user = userLeave(socket.id);
 		if(user) {
-			// console.log(roomf.count - 1);
-			const help = getRoomUsers(user.room);
-			if(help.length === 0) {
-				const roomf = roomDest(user.room);
-			}
 			socket.broadcast.to(user.room).emit('message', `${user.username} has left the room!`);
 			socket.emit('message', 'You are offline! Please reload the page...');
 			io.to(user.room).emit('roomUsers', {
