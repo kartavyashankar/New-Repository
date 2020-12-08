@@ -9,7 +9,8 @@ const {
 	roomAdd,
 	getRoomStatus,
 	updateCode,
-	updateCompiler
+	updateCompiler,
+	roomDest
 	 } = require('./utils/users');
 
 const app = express();
@@ -25,7 +26,8 @@ io.on('connection', socket => {
     socket.on('joinRoom', ({ username, room }) => {
     	const user = userJoin(socket.id, username, room);
     	const roomf = roomAdd(room, 'init0', 0);
-    	console.log(roomf.cc);
+    	// console.log(roomf.cc);
+    	// updateCount(user.room, roomf.count+1);
     	socket.join(user.room);
     	socket.emit('message', 'You have joined the room!');
     	if(roomf.cc !== 'init0')
@@ -63,6 +65,11 @@ io.on('connection', socket => {
     socket.on('disconnect', () => {
 		const user = userLeave(socket.id);
 		if(user) {
+			// console.log(roomf.count - 1);
+			const help = getRoomUsers(user.room);
+			if(help.length === 0) {
+				const roomf = roomDest(user.room);
+			}
 			socket.broadcast.to(user.room).emit('message', `${user.username} has left the room!`);
 			socket.emit('message', 'You are offline! Please reload the page...');
 			io.to(user.room).emit('roomUsers', {

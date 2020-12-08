@@ -10,7 +10,7 @@ function userJoin(id, username, room) {
 	return user;
 }
 
-function roomAdd(roomName, cc, comp) {
+function roomAdd(roomName, cc, comp, count) {
 	const index = rooms.findIndex(roomf => roomf.roomName === roomName);
 	if(index === -1) {
 		const roomf = { roomName, cc, comp };
@@ -21,7 +21,7 @@ function roomAdd(roomName, cc, comp) {
 }
 
 function getRoomStatus(roomName) {
-	return rooms.find(roomf => roomf.roomName === roomName);
+	return rooms.find(roomf => roomf.roomName === roomName).count;
 }
 
 // Get current user
@@ -36,6 +36,7 @@ function  userLeave(id) {
 		return users.splice(index, 1)[0];
 	}
 }
+
 
 function updateCode(roomName, cc) {
 	const index = rooms.findIndex(roomf => roomf.roomName === roomName);
@@ -56,6 +57,13 @@ function getRoomUsers(room) {
 	return users.filter(user => user.room === room);
 }
 
+function roomDest(roomName) {
+	const index = rooms.findIndex(roomf => roomf.roomName === roomName);
+	if(index !== -1) {
+		return rooms.splice(index, 1)[0];
+	}
+}
+
 module.exports = {
 	userJoin,
 	getCurrentUser,
@@ -64,5 +72,6 @@ module.exports = {
 	roomAdd,
 	getRoomStatus,
 	updateCode,
-	updateCompiler
+	updateCompiler,
+	roomDest
 };

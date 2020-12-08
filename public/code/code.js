@@ -47,9 +47,10 @@ socket.on('receive', (shared_code) => {
 
 socket.on('rlang', (team_id) => {
     changeClass1(team_id);
-    // editor1.setOption('mode', modes[type]);
+    editor1.setOption('mode', modes[team_id]);
     // addCompilerOptions1(editor1, team_id);
-    // team_compiler = compilers[type];
+    team_compiler = compilers[team_id];
+    team_current = team_id;
     saveToStorage1(editor1, team_id);
 });
 
@@ -187,7 +188,7 @@ function addCompilerOptions1(editor, type){
     editor.setOption('mode', modes[type]);
     editor.setValue(TEAM_CODES[type]);
     team_compiler = compilers[type];
-    // team_current = type;
+    team_current = type;
 }
 
 function addCompilerOptions2(editor, type){
