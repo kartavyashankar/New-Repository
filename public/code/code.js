@@ -9,8 +9,9 @@ const not = document.getElementById('not');
 const { username, room } = Qs.parse(location.search, {
     ignoreQueryPrefix: true
 }); 
+var cond = false;
+var counter = 0;
 
-socket.emit('joinRoom', { username, room });
 
 // Messsage from Server
 socket.on('message', (message) => {
@@ -39,16 +40,38 @@ socket.on('roomUsers', ({ room, users }) => {
     `;
 });
 
-socket.on('receive', ({shared_code, team_current}) => {
+socket.on('receive', (shared_code) => {
+    cond = true;
     editor1.setValue(shared_code);
-    changeClass1(team_current);
-    saveToStorage1(editor1, team_current);
+});
+
+socket.on('rlang', (team_id) => {
+    changeClass1(team_id);
+    // editor1.setOption('mode', modes[type]);
+    // addCompilerOptions1(editor1, team_id);
+    // team_compiler = compilers[type];
+    saveToStorage1(editor1, team_id);
 });
 
 // Code Shared passed to the server
 function shareCode(){
-    const shared_code = editor1.getValue();
-    socket.emit('send', {shared_code, team_current});
+    if(cond === true)
+    {
+        cond = false;
+    }
+    else
+    {
+        if(counter === 0)
+        {
+            counter = counter+1;
+        }
+        else
+        {
+            var shared_code = editor1.getValue();
+            socket.emit('send', shared_code);
+            counter = counter + 1;
+        }
+    }
 }
 
 
@@ -89,6 +112,10 @@ function changeClass1(team_id){
     team_classList[3].classList.remove("active");
     team_classList[4].classList.remove("active");
     team_classList[team_id].classList.add("active");
+}
+
+function sendClass(team_id) {
+    socket.emit('lang', team_id);
 }
 
 function changeClass2(personal_id){
@@ -160,7 +187,7 @@ function addCompilerOptions1(editor, type){
     editor.setOption('mode', modes[type]);
     editor.setValue(TEAM_CODES[type]);
     team_compiler = compilers[type];
-    team_current = type;
+    // team_current = type;
 }
 
 function addCompilerOptions2(editor, type){
@@ -330,7 +357,10 @@ addCompilerOptions2(editor2, 0, personal_current);
 
 //                                  Running the code
 
+socket.emit('joinRoom', { username, room });
+
 // IDE Access Parameters (Need to be changed every 14 days)
+
 var endpoint = '780dfb37.compilers.sphere-engine.com';
 var accessToken = '05cc18c6b4517ed81603377261e667e2';
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
@@ -338,3 +368,4 @@ const mainUrl = 'https://' + endpoint + '/api/v4/submissions?';
 
 var personal_compiler = compilers[0];
 var team_compiler = compilers[0];
+editor1.on('change', shareCode);

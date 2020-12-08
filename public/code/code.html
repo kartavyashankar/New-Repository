@@ -46,7 +46,9 @@
 <body>
 	<p id="teamID">Team ID: <span id="tarea"></span><span style="position: absolute; left: 50%;"></span></p>
 	<h3>Users</h3>
-	<ul id="ulist"></ul>
+    <div style="height: 10%; overflow-y: scroll;">
+	   <ul id="ulist"></ul>
+    </div>
 	<p class="notificationBot   ">Notification Bot: <span id="not"></span></p>
     <h3>Team's Code</h3>
     <div>
@@ -55,19 +57,19 @@
                 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" id="c_1" onclick="addCompilerOptions1(editor1, 0); changeClass1(0);">C</a>
+                            <a class="nav-link active" id="c_1" onclick="addCompilerOptions1(editor1, 0); changeClass1(0); sendClass(0);">C</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="c++_1" onclick="addCompilerOptions1(editor1, 1); changeClass1(1);">C++</a>
+                            <a class="nav-link" id="c++_1" onclick="addCompilerOptions1(editor1, 1); changeClass1(1); sendClass(1);">C++</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="java_1" onclick="addCompilerOptions1(editor1, 2); changeClass1(2);">Java</a>
+                            <a class="nav-link" id="java_1" onclick="addCompilerOptions1(editor1, 2); changeClass1(2); sendClass(2);">Java</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="python_1" onclick="addCompilerOptions1(editor1, 3); changeClass1(3);">Python</a>
+                            <a class="nav-link" id="python_1" onclick="addCompilerOptions1(editor1, 3); changeClass1(3); sendClass(3);">Python</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="python3_1" onclick="addCompilerOptions1(editor1, 4); changeClass1(4);">Python 3</a>
+                            <a class="nav-link" id="python3_1" onclick="addCompilerOptions1(editor1, 4); changeClass1(4); sendClass(4);">Python 3</a>
                         </li>
                     </ul>
                 </nav>
