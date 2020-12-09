@@ -1,57 +1,68 @@
-const express = require('express');
-const socketio = require('socket.io');
-const http = require('http');
-const { 
-	userJoin, 
-	getCurrentUser, 
-	userLeave, 
-	getRoomUsers
-	 } = require('./utils/users');
+const express = require("express");
+const socketio = require("socket.io");
+const http = require("http");
+const {
+  getCurrentUser,
+  userLeave,
+  getRoomUsers,
+  joinUser,
+} = require("./utils/users");
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
 // Set static folder
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 // Run when client connects
-io.on('connection', socket => {
-    // Listen for code Shared
-    socket.on('joinRoom', ({ username, room }) => {
-    	const user = userJoin(socket.id, username, room);
-    	socket.join(user.room);
-    	socket.emit('message', 'You have joined the room!');
-    	socket.broadcast.to(user.room).emit('message', `${user.username} has joined the room!`);
-    	io.to(user.room).emit('roomUsers', {
-			room: user.room,
-			users: getRoomUsers(user.room)
-		});
-		socket.on('chatMessage', msg => {
-			socket.broadcast.to(user.room).emit('chat', {
-				username : user.username,
-				text : msg
-			});
-		});
-		socket.on('send', ({shared_code, team_current}) => {
-			const user = getCurrentUser(socket.id);
-        	socket.broadcast.to(user.room).emit('receive', {shared_code, team_current});
-        	socket.broadcast.to(user.room).emit('message', `${user.username} has shared the code!`);
-			socket.emit('message', 'You have shared your code!');
-    	});
+io.on("connection", (socket) => {
+  // Listen for code Shared
+  socket.on("JOIN_ROOM", ({ username, room }) => {
+    // Join user to the requested room
+    const user = joinUser(socket.id, username, room);
+    socket.join(user.room);
+
+    // Notify joined user and other users in that room
+    socket.emit("NOTIFICATION", "You have joined the room.");
+    socket
+      .to(user.room)
+      .emit("NOTIFICATION", `${user.username} has joined the room.`);
+
+    // Update users list of that room
+    io.in(user.room).emit("USERS_LIST", getRoomUsers(user.room));
+
+    // Handle sending chat messages
+    socket.on("CHAT_MESSAGE_SEND", (message) => {
+      socket.to(user.room).emit("CHAT_MESSAGE_RECEIVE", {
+        username: user.username,
+        message: message,
+      });
     });
 
-    socket.on('disconnect', () => {
-		const user = userLeave(socket.id);
-		if(user) {
-			socket.broadcast.to(user.room).emit('message', `${user.username} has left the room!`);
-			socket.emit('message', 'You are offline! Please reload the page...');
-			io.to(user.room).emit('roomUsers', {
-				room : user.room,
-				users: getRoomUsers(user.room)
-			});
-		}
-	});
+    socket.on("SEND", ({ shared_code, team_current }) => {
+      const user = getCurrentUser(socket.id);
+      socket.to(user.room).emit("RECEIVE", { shared_code, team_current });
+      socket
+        .to(user.room)
+        .emit("NOTIFICATION", `${user.username} has shared the code.`);
+      socket.emit("NOTIFICATION", "You have shared your code.");
+    });
+  });
+
+  socket.on("disconnect", () => {
+    const user = userLeave(socket.id);
+    if (user) {
+      socket
+        .to(user.room)
+        .emit("NOTIFICATION", `${user.username} has left the room.`);
+      socket.emit("NOTIFICATION", "You are offline. Please reload the page.");
+      io.to(user.room).emit("roomUsers", {
+        room: user.room,
+        users: getRoomUsers(user.room),
+      });
+    }
+  });
 });
 
 const PORT = process.env.PORT || 3000;

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code</title>
+    <link rel="icon" href="/images/favicon.png" />
+    <!-- CodeMirror -->
+    <script src="../codemirror/lib/codemirror.js"></script>
+    <script src="../codemirror/addon/edit/closebrackets.js"></script>
+    <script src="../codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="../codemirror/mode/clike/clike.js"></script>
+    <script src="../codemirror/mode/python/python.js"></script>
+    <link rel="stylesheet" href="../codemirror/lib/codemirror.css" />
+
+    <link rel="stylesheet" href="../tailwind.min.css" />
+  </head>
+  <body
+    style="font-family: 'Poppins', sans-serif"
+    class="bg-gray-50 min-h-screen relative"
+  >
+    <div class="container mx-auto p-8">
+      <!-- Topbar -->
+      <div class="bg-blue-600 text-white p-6 rounded-lg shadow">
+        <p id="teamID" class="text-lg">Team ID : <span id="tarea"></span></p>
+        <h3 class="text-lg mt-4">👥 Users <span id="usersCount"></span></h3>
+        <ul
+          id="ulist"
+          class="bg-white rounded-lg p-4 py-2 mt-2 text-black max-h-32 overflow-auto"
+        ></ul>
+      </div>
+      <!-- Notification -->
+      <div class="relative">
+        <span
+          class="absolute inline-flex h-4 w-4 rounded-full bg-purple-400 opacity-75"
+        ></span>
+        <p
+          class="mt-4 bg-yellow-500 rounded-lg p-4 text-white shadow"
+          id="notificationArea"
+        ></p>
+      </div>
+      <!-- Team's Code -->
+      <div class="mt-12">
+        <h3 class="text-2xl font-bold">Team's Code</h3>
+        <ul
+          class="flex space-x-5 mt-3 bg-gray-800 py-2 px-4 rounded-lg rounded-b-none text-white overflow-auto"
+        >
+          <li>
+            <a
+              class="cursor-pointer active"
+              id="c_1"
+              onclick="addCompilerOptions1(editor1, 0); changeClass1(0);"
+              >C</a
+            >
+          </li>
+          <li>
+            <a
+              class="cursor-pointer"
+              id="c++_1"
+              onclick="addCompilerOptions1(editor1, 1); changeClass1(1);"
+              >C++</a
+            >
+          </li>
+          <li>
+            <a
+              class="cursor-pointer"
+              id="java_1"
+              onclick="addCompilerOptions1(editor1, 2); changeClass1(2);"
+              >Java</a
+            >
+          </li>
+          <li>
+            <a
+              class="cursor-pointer"
+              id="python_1"
+              onclick="addCompilerOptions1(editor1, 3); changeClass1(3);"
+              >Python</a
+            >
+          </li>
+          <li>
+            <a
+              class="cursor-pointer"
+              id="python3_1"
+              onclick="addCompilerOptions1(editor1, 4); changeClass1(4);"
+              >Python 3</a
+            >
+          </li>
+        </ul>
+        <div class="pb-0 flex flex-col md:flex-row" id="codeArea">
+          <div class="w-full border border-right-gray-800">
+            <textarea id="team_code"></textarea>
+          </div>
+          <div class="w-full flex flex-col">
+            <textarea
+              id="team_input"
+              placeholder="Input"
+              class="p-2 md:h-full h-32 resize-none focus:outline-none"
+            ></textarea>
+            <textarea
+              class="p-2 md:h-full h-32 resize-none focus:outline-none"
+              id="team_output"
+              rows="5"
+              cols="30"
+              placeholder="Output"
+              disabled
+            ></textarea>
+          </div>
+        </div>
+        <div class="flex text-white">
+          <button
+            class="px-5 bg-gray-800 py-2 focus:outline-none"
+            id="team_run_code"
+            onclick="run_compile(editor1, 'team_input', 'team_output', team_compiler); saveToStorage1(editor1, team_current);"
+          >
+            Run Code
+          </button>
+          <button
+            class="px-5 bg-red-500 py-2 focus:outline-none"
+            onclick="addDefault(editor1, team_current)"
+          >
+            Reset Editor
+          </button>
+          <button
+            class="px-5 bg-yellow-600 py-2 focus:outline-none"
+            onclick="shareCode()"
+          >
+            Share
+          </button>
+        </div>
+      </div>
+      <!-- Personal Code -->
+      <div class="mt-12">
+        <h3 class="text-2xl font-bold">Personal Code</h3>
+        <ul
+          class="flex space-x-5 mt-3 bg-gray-800 py-2 px-4 rounded-lg rounded-b-none text-white overflow-auto"
+        >
+          <li>
+            <a
+              class="cursor-pointer active"
+              id="c_2"
+              onclick="addCompilerOptions2(editor2, 0); changeClass2(personal_c);"
+              >C</a
+            >
+          </li>
+          <li>
+            <a
+              class="cursor-pointer"
+              id="c++_2"
+              onclick="addCompilerOptions2(editor2, 1); changeClass2(personal_cpp);"
+              >C++</a
+            >
+          </li>
+          <li>
+            <a
+              class="cursor-pointer"
+              id="java_2"
+              onclick="addCompilerOptions2(editor2, 2); changeClass2(personal_java);"
+              >Java</a
+            >
+          </li>
+          <li>
+            <a
+              class="cursor-pointer"
+              id="python_2"
+              onclick="addCompilerOptions2(editor2, 3); changeClass2(personal_python);"
+              >Python</a
+            >
+          </li>
+          <li>
+            <a
+              class="cursor-pointer"
+              id="python3_2"
+              onclick="addCompilerOptions2(editor2, 4); changeClass2(personal_python3);"
+              >Python 3</a
+            >
+          </li>
+        </ul>
+        <div class="pb-0 flex flex-col md:flex-row">
+          <div class="w-full border border-right-gray-800">
+            <textarea id="personal_code"></textarea>
+          </div>
+          <div class="w-full flex flex-col">
+            <textarea
+              id="personal_input"
+              placeholder="Input"
+              class="p-2 md:h-full h-32 resize-none focus:outline-none"
+            ></textarea>
+            <textarea
+              class="p-2 md:h-full h-32 resize-none focus:outline-none"
+              id="personal_output"
+              rows="5"
+              cols="30"
+              placeholder="Output"
+              disabled
+            ></textarea>
+          </div>
+        </div>
+        <div class="flex text-white">
+          <button
+            class="px-5 bg-gray-800 py-2 focus:outline-none"
+            id="personal_run_code"
+            onclick="run_compile(editor2, 'personal_input', 'personal_output', personal_compiler); saveToStorage2(editor2, personal_current);"
+          >
+            Run Code
+          </button>
+
+          <button
+            class="px-5 bg-red-500 py-2 focus:outline-none"
+            onclick="addDefault(editor2, personal_current)"
+          >
+            Reset Editor
+          </button>
+        </div>
+      </div>
+      <!-- Chat Messages -->
+      <div
+        class="fixed bottom-0 right-5"
+        style="width: 300px; max-width: 80%; z-index: 1000"
+      >
+        <div
+          id="ttlbar"
+          class="bg-blue-500 text-white py-2 px-4 rounded-t-lg relative"
+        >
+          <span
+            id="chatPing"
+            class="absolute hidden top-0 right-0 inline-flex h-4 w-4 rounded-full bg-red-500"
+          ></span>
+          <div class="flex justify-between">
+            <span> Chat messages </span>
+            <button
+              class="focus:outline-none pl-5"
+              id="cbutn"
+              onclick="openChatBox()"
+            >
+              👀
+            </button>
+          </div>
+        </div>
+        <div id="chat-container" class="h-0 shadow-md">
+          <div
+            id="chatBox"
+            class="chat-messages overflow-y-auto h-64 bg-white p-4 flex flex-col space-y-2"
+          >
+            <!-- Your Message -->
+            <!-- <div class="bg-yellow-300 p-2 rounded">
+              <p class="text-sm">Message I sent to others in the room.</p>
+              <p class="text-xs mt-2">You</p>
+            </div> -->
+            <!-- Others Message -->
+            <!-- <div class="bg-blue-200 p-2 rounded">
+              <p class="text-sm">Message others sent in the room.</p>
+              <p class="text-xs mt-2">Ben</p>
+            </div> -->
+          </div>
+          <div class="chat-form-container">
+            <form id="chatForm" class="flex">
+              <input
+                id="messageInput"
+                class="p-2 px-3 focus:outline-none bg-gray-200"
+                type="text"
+                placeholder="Enter Message"
+                required
+                autocomplete="off"
+              />
+              <button class="w-full bg-yellow-500 text-white">⬆ Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./code.js"></script>
+  </body>
+</html>

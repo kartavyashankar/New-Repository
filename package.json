@@ -4,14 +4,17 @@
   "description": "MegaProject",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server",
+    "dev": "nodemon server"
   },
-  "author": "Kartavya Shaswat Anshul",
-  "license": "ISC",
+  "author": "Kartavya, Shaswat, Anshul, Piyush",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
     "require": "^2.4.20",
     "socket.io": "^3.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }
