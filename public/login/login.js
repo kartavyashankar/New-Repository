@@ -4,7 +4,6 @@ const teamidInput = loginForm.querySelector("input#room");
 
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  errorNode.textContent = "";
   const username = usernameInput.value;
   const teamid = teamidInput.value;
   if (username.includes(" ")) {
@@ -17,5 +16,5 @@ loginForm.addEventListener("submit", (e) => {
 
   // Form validated, navigate to main app
 
-  window.location.assign(`code/code.html?username=${username}&room=${teamid}`);
+  window.location.assign(`/code?username=${username}&room=${teamid}`);
 });

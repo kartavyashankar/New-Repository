@@ -11,6 +11,13 @@ const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });
 
+function escapeHtml(html) {
+  var text = document.createTextNode(html);
+  var p = document.createElement("p");
+  p.appendChild(text);
+  return p.innerHTML;
+}
+
 // Insert text extracted from query strings into the dom
 tarea.textContent = room;
 
