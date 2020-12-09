@@ -47,8 +47,8 @@ io.on("connection", (socket) => {
         .emit("receive", { shared_code, team_current });
       socket.broadcast
         .to(user.room)
-        .emit("message", `${user.username} has shared the code!`);
-      socket.emit("message", "You have shared your code!");
+        .emit("NOFITICATION", `${user.username} has shared the code.`);
+      socket.emit("NOTIFICATION", "You have shared your code.");
     });
   });
 
@@ -57,8 +57,8 @@ io.on("connection", (socket) => {
     if (user) {
       socket.broadcast
         .to(user.room)
-        .emit("message", `${user.username} has left the room!`);
-      socket.emit("message", "You are offline! Please reload the page...");
+        .emit("NOTIFICATION", `${user.username} has left the room.`);
+      socket.emit("NOTIFICATION", "You are offline. Please reload the page.");
       io.to(user.room).emit("roomUsers", {
         room: user.room,
         users: getRoomUsers(user.room),
