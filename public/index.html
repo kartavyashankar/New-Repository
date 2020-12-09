@@ -4,42 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RTE</title>
+    <link href="tailwind.min.css" rel="stylesheet" />
     <link rel="icon" href="images/logo.png" />
-    <link rel="stylesheet" href="stylesheets/homepage.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
       rel="stylesheet"
     />
   </head>
+  <body
+    style="font-family: 'Poppins', sans-serif"
+    class="bg-gray-100 min-h-screen"
+  >
+    <div class="container mx-auto p-8">
+      <header class="flex items-center">
+        <img src="./images/rte.png" alt="rte logo" />
+        <h1 class="text-3xl font-bold ml-6">RTE</h1>
+      </header>
 
-  <body>
-    <div class="nav">
-      <div class="wrapper">
-        <nav>
-          <div class="logoimg">
-            <img src="images/rte.png" alt="" />
-          </div>
-          <div class="logo">RTE</div>
-
-          <ul class="nav-item">
-            <li>
-              <a href="pop"></a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-
-    <div class="tiledBackground"></div>
-    <div class="header">
-      <div class="wrapper">
-        <header>
-          <div class="text1">Share Code in Real Time Environment</div>
-          <div class="text2">
-            A Usual Online Editor with an unusual real time sharing feature
-          </div>
-          <a href="login.html" id="start">Start Now</a>
-        </header>
+      <div class="flex flex-col items-center text-center py-32">
+        <h2 class="text-4xl font-bold">Share Code in Real Time Environment</h2>
+        <p class="text-lg mt-2">
+          A Usual Online Editor with an unusual real time sharing feature
+        </p>
+        <a
+          href="/login"
+          role="button"
+          class="p-4 bg-pink-400 mt-8 hover:shadow-md transition duration-300 text-white rounded-lg"
+        >
+          Start Now
+        </a>
       </div>
     </div>
   </body>

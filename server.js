@@ -2,10 +2,10 @@ const express = require("express");
 const socketio = require("socket.io");
 const http = require("http");
 const {
-  userJoin,
   getCurrentUser,
   userLeave,
   getRoomUsers,
+  joinUser,
 } = require("./utils/users");
 
 const app = express();
@@ -18,23 +18,28 @@ app.use(express.static("public"));
 // Run when client connects
 io.on("connection", (socket) => {
   // Listen for code Shared
-  socket.on("joinRoom", ({ username, room }) => {
-    const user = userJoin(socket.id, username, room);
+  socket.on("JOIN_ROOM", ({ username, room }) => {
+    // Join user to the requested room
+    const user = joinUser(socket.id, username, room);
     socket.join(user.room);
-    socket.emit("message", "You have joined the room!");
-    socket.broadcast
+
+    // Notify joined user and other users in that room
+    socket.emit("NOTIFICATION", "You have joined the room.");
+    socket
       .to(user.room)
-      .emit("message", `${user.username} has joined the room!`);
-    io.to(user.room).emit("roomUsers", {
-      room: user.room,
-      users: getRoomUsers(user.room),
-    });
-    socket.on("chatMessage", (msg) => {
-      socket.broadcast.to(user.room).emit("chat", {
+      .emit("message", `${user.username} has joined the room.`);
+
+    // Update users list of that room
+    io.in(user.room).emit("USERS_LIST", getRoomUsers(user.room));
+
+    // Handle sending chat messages
+    socket.on("CHAT_MESSAGE_SEND", (message) => {
+      socket.to(user.room).emit("CHAT_MESSAGE_RECEIVE", {
         username: user.username,
-        text: msg,
+        message: message,
       });
     });
+
     socket.on("send", ({ shared_code, team_current }) => {
       const user = getCurrentUser(socket.id);
       socket.broadcast

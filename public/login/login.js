@@ -1,7 +1,6 @@
 const loginForm = document.querySelector("#post");
 const usernameInput = loginForm.querySelector("input#username");
 const teamidInput = loginForm.querySelector("input#room");
-const errorNode = document.querySelector("#error");
 
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
