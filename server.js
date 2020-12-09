@@ -40,14 +40,12 @@ io.on("connection", (socket) => {
       });
     });
 
-    socket.on("send", ({ shared_code, team_current }) => {
+    socket.on("SEND", ({ shared_code, team_current }) => {
       const user = getCurrentUser(socket.id);
-      socket.broadcast
+      socket.to(user.room).emit("RECEIVE", { shared_code, team_current });
+      socket
         .to(user.room)
-        .emit("receive", { shared_code, team_current });
-      socket.broadcast
-        .to(user.room)
-        .emit("NOFITICATION", `${user.username} has shared the code.`);
+        .emit("NOTIFICATION", `${user.username} has shared the code.`);
       socket.emit("NOTIFICATION", "You have shared your code.");
     });
   });
@@ -55,7 +53,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     const user = userLeave(socket.id);
     if (user) {
-      socket.broadcast
+      socket
         .to(user.room)
         .emit("NOTIFICATION", `${user.username} has left the room.`);
       socket.emit("NOTIFICATION", "You are offline. Please reload the page.");

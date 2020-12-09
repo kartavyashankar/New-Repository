@@ -65,7 +65,7 @@ function openChatBox() {
   chatPingNode.classList.add("hidden");
 }
 
-socket.on("receive", ({ shared_code, team_current }) => {
+socket.on("RECEIVE", ({ shared_code, team_current }) => {
   editor1.setValue(shared_code);
   changeClass1(team_current);
   saveToStorage1(editor1, team_current);
@@ -74,7 +74,7 @@ socket.on("receive", ({ shared_code, team_current }) => {
 // Code Shared passed to the server
 function shareCode() {
   const shared_code = editor1.getValue();
-  socket.emit("send", { shared_code, team_current });
+  socket.emit("SEND", { shared_code, team_current });
 }
 
 function YourMessage(message) {
