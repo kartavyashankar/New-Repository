@@ -1,23 +1,22 @@
-var user = document.getElementById('username');
-var teamid = document.getElementById('room');
+const loginForm = document.querySelector("#post");
+const usernameInput = loginForm.querySelector("input#username");
+const teamidInput = loginForm.querySelector("input#room");
+const errorNode = document.querySelector("#error");
 
-function check(){
-    var username = user.value;
-    var room = teamid.value;
-    if(username.indexOf(' ') > -1){
-        alert('Username must not contain a space');
-    }
-    else{
-        if(room.length>=6 && room.length<=8){
-            if(room.indexOf(' ') > -1){
-                alert('Team ID must not contain a space');
-            }
-            else{
-                post.setAttribute('action', 'code/code.html');
-            }
-        }
-        else{
-            alert('Team ID must contain 6-8 characters');
-        }
-    }
-}
+loginForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  errorNode.textContent = "";
+  const username = usernameInput.value;
+  const teamid = teamidInput.value;
+  if (username.includes(" ")) {
+    return (errorNode.textContent = "Username must not contain any space.");
+  }
+
+  if (teamid.includes(" ")) {
+    return (errorNode.textContent = "Team ID must not contain any space.");
+  }
+
+  // Form validated, navigate to main app
+
+  window.location.assign(`code/code.html?username=${username}&room=${teamid}`);
+});
