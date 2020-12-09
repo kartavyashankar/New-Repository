@@ -5,11 +5,12 @@ const cc = document.getElementById("chat-container");
 const ttlbar = document.getElementById("ttlbar");
 const ulist = document.getElementById("ulist");
 const tarea = document.getElementById("tarea");
+const chatPingNode = document.querySelector("#chatPing");
 const notificationArea = document.querySelector("#notificationArea");
 const chatBox = document.querySelector("#chatBox");
-const { username, room } = Qs.parse(location.search, {
-  ignoreQueryPrefix: true,
-});
+const params = new URLSearchParams(window.location.search);
+const username = params.get("username");
+const room = params.get("room");
 
 function escapeHtml(html) {
   var text = document.createTextNode(html);
@@ -28,24 +29,41 @@ socket.on("USERS_LIST", (list) => {
   ulist.innerHTML = `
     ${list.map((user) => `<li>${escapeHtml(user.username)}</li>`).join("")}
     `;
+  const usersCountNode = document.querySelector("#usersCount");
+  usersCountNode.textContent = `(${list.length})`;
 });
 
 // Nofitication from the server
 socket.on("NOTIFICATION", (message) => {
-  notificationArea.textContent = message;
+  notificationArea.textContent = "🔔  " + message;
+  const dot = notificationArea.previousElementSibling;
+  dot.classList.add("animate-ping");
+  dot.classList.remove("hidden");
+
+  setTimeout(() => {
+    dot.classList.remove("animate-ping");
+    dot.classList.add("hidden");
+  }, 4000);
 });
 
-socket.on("CHAT_MESSAGE_RECEIVE", (chat) => {
-  const div = document.createElement("div");
-  div.className = "ot mess";
-  div.innerHTML = `<p>${escapeHtml(chat.username)}</p> 
-  <p>${escapeHtml(chat.message)}</p>`;
+socket.on("CHAT_MESSAGE_RECEIVE", ({ username, message }) => {
+  const messageNode = Message(message, username);
 
-  chatBox.appendChild(div);
-  div.scrollIntoView({ behavior: "smooth" });
+  chatBox.appendChild(messageNode);
+  messageNode.scrollIntoView({ behavior: "smooth" });
 
-  if (cc.style.display === "none") ttlbar.style.background = "red";
+  if (cc.classList.contains("h-0")) {
+    chatPingNode.classList.remove("hidden");
+    chatPingNode.classList.add("animate-ping");
+  }
 });
+
+function openChatBox() {
+  var cf = document.getElementById("chat-container");
+  cf.classList.toggle("h-0");
+  chatPingNode.classList.remove("animate-ping");
+  chatPingNode.classList.add("hidden");
+}
 
 socket.on("receive", ({ shared_code, team_current }) => {
   editor1.setValue(shared_code);
@@ -59,6 +77,24 @@ function shareCode() {
   socket.emit("send", { shared_code, team_current });
 }
 
+function YourMessage(message) {
+  const div = document.createElement("div");
+  div.className = "bg-yellow-300 p-2 rounded";
+  div.innerHTML = `<p class="text-sm">${escapeHtml(message)}</p>
+  <p class="text-xs mt-2">You</p>`;
+
+  return div;
+}
+
+function Message(message, username) {
+  const div = document.createElement("div");
+  div.className = "bg-blue-200 p-2 rounded";
+  div.innerHTML = `<p class="text-sm">${escapeHtml(message)}</p>
+  <p class="text-xs mt-2">${escapeHtml(username)}</p>`;
+
+  return div;
+}
+
 /*********** CLIENT SIDE ************/
 chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -68,13 +104,10 @@ chatForm.addEventListener("submit", (e) => {
 
   socket.emit("CHAT_MESSAGE_SEND", message);
 
-  const div = document.createElement("div");
-  div.className = "you mess";
-  div.innerHTML = `<p>You</p> <p>${message}</p>`;
-
+  const messageNode = YourMessage(message);
   // Append message and scroll chat box to bottom
-  chatBox.appendChild(div);
-  div.scrollIntoView({ behavior: "smooth" });
+  chatBox.appendChild(messageNode);
+  messageNode.scrollIntoView({ behavior: "smooth" });
 
   // Clear input and focus
   messageInput.value = "";

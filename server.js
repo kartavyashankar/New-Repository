@@ -27,7 +27,7 @@ io.on("connection", (socket) => {
     socket.emit("NOTIFICATION", "You have joined the room.");
     socket
       .to(user.room)
-      .emit("message", `${user.username} has joined the room.`);
+      .emit("NOTIFICATION", `${user.username} has joined the room.`);
 
     // Update users list of that room
     io.in(user.room).emit("USERS_LIST", getRoomUsers(user.room));
