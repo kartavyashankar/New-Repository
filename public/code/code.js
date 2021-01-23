@@ -40,9 +40,10 @@ socket.on('roomUsers', ({ room, users }) => {
 });
 
 socket.on('receive', ({shared_code, team_current}) => {
-    editor1.setValue(shared_code);
+    addCompilerOptions1(editor1, team_current);
     changeClass1(team_current);
-    saveToStorage1(editor1, team_current);
+    editor1.setValue(shared_code);
+    // saveToStorage1(editor1, team_current);
 });
 
 // Code Shared passed to the server
@@ -89,6 +90,7 @@ function changeClass1(team_id){
     team_classList[3].classList.remove("active");
     team_classList[4].classList.remove("active");
     team_classList[team_id].classList.add("active");
+    // team_compiler = compilers[team_id];
 }
 
 function changeClass2(personal_id){
@@ -98,6 +100,7 @@ function changeClass2(personal_id){
     personal_python.classList.remove("active");
     personal_python3.classList.remove("active");
     personal_id.classList.add("active");
+    // personal_compiler = compilers[personal_id];
 }
 
 function initialize_code(){
@@ -239,11 +242,11 @@ function run_compile(editor, input, output, compiler){
 }
 
 //Methods used to save team_code or personal_code to Local Storage
-function saveToStorage1(editor, team_current){
+/*function saveToStorage1(editor, team_current){
     console.log(team_current);
     TEAM_CODES[team_current] = editor.getValue();
     localStorage.setItem("IDE_1", JSON.stringify(TEAM_CODES));
-}
+}*/
 
 function saveToStorage2(editor, personal_current){
     PERSONAL_CODES[personal_current] = editor.getValue();
@@ -280,19 +283,14 @@ let PERSONAL_CODES = ['','','','',''];
 let TEAM_CODES = ['','','','',''];
 
 //Getting default codes from Local Storage
-let data1 = localStorage.getItem("IDE_1");
 let data2 = localStorage.getItem("IDE_2");
 
-if(data1){
-    TEAM_CODES = JSON.parse(data1);
-}
-else{
-    TEAM_CODES[0] = templates[0];
-    TEAM_CODES[1] = templates[1];
-    TEAM_CODES[2] = templates[2];
-    TEAM_CODES[3] = templates[3];
-    TEAM_CODES[4] = templates[4];
-}
+// Adding default codes to team code. 
+TEAM_CODES[0] = templates[0];
+TEAM_CODES[1] = templates[1];
+TEAM_CODES[2] = templates[2];
+TEAM_CODES[3] = templates[3];
+TEAM_CODES[4] = templates[4];
 
 if(data2){
     PERSONAL_CODES = JSON.parse(data2);
@@ -331,8 +329,8 @@ addCompilerOptions2(editor2, 0, personal_current);
 //                                  Running the code
 
 // IDE Access Parameters (Need to be changed every 14 days)
-var endpoint = '780dfb37.compilers.sphere-engine.com';
-var accessToken = '05cc18c6b4517ed81603377261e667e2';
+var endpoint = 'dd5a1521.compilers.sphere-engine.com';
+var accessToken = '011b183518eb8a8833cec16f8a3bd721';
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 const mainUrl = 'https://' + endpoint + '/api/v4/submissions?';
 
